@@ -2,20 +2,31 @@ import { createContext, useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { chainIds } from "../constants/chainId";
 import { getChainId } from "../utils";
-import abi from "../contracts/abi.json";
+
+import nftContractAbi from "../contracts/GoblinNFT.json";
+import stakeContractAbi from "../contracts/GoblinStake.json";
 
 // import {} from "../contracts/abi.json" secondary abi
 
 export const AppContext = createContext();
 
 const ContextProvider = ({ children }) => {
-  const contracAddress = "";
-  console.log(abi);
+  const goerliRPC = process.env.REACT_APP_RPC_ENDPOINT;
+  console.log(goerliRPC);
 
-  // const staticProvider = new ethers.providers.JsonRpcProvider(`url`)();
-  // const staticContract = new ethers.Contract(`address`, abi, `provider`);
+  const nftContractAddress = "0xE52B8CEB1B40E90c41f778DAb070aF2A793CdD8e";
+  const stakeContracAddress = "0x4ad2dA71424387A32FcFfcFc474cE38d11C5F810";
 
-  const readOnlyTokenContrac = "token";
+  // console.log(stakeContractAbi);
+  // console.log(nftContractAbi);
+
+  // const staticProvider = new ethers.providers.JsonRpcProvider(goerliRPC);
+  // const staticNFTContract = new ethers.Contract(
+  //   nftContractAddress,
+  //   nftContractAbi,
+  //   staticProvider
+  // );
+
   const [userAddress, setUserAddress] = useState(null);
   const [netWork, setNetwork] = useState("Ethereum");
   const [signer, setSigner] = useState(null);
@@ -24,7 +35,7 @@ const ContextProvider = ({ children }) => {
     /**Get the network on page load (even if the user is not connected) */
     const getId = async () => {
       const id = await getChainId();
-      setNetwork(chainIds[id].toUpperCase());
+      setNetwork(chainIds[id]);
     };
     getId();
 
@@ -43,6 +54,10 @@ const ContextProvider = ({ children }) => {
         setNetwork,
         signer,
         setSigner,
+
+        stakeContracAddress,
+        nftContractAddress,
+        nftContractAbi,
       }}
     >
       {children}

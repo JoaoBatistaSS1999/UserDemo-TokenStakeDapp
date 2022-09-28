@@ -39,8 +39,8 @@ const Header = () => {
         console.log("accounts changed", accounts[0]);
         setShortUserAddress(shortAddress(accounts[0]));
 
-        const signer = provider.getSigner();
-        console.log("header getaccounts signer =>", signer);
+        // const signer = provider.getSigner();
+        // console.log("header getaccounts signer =>", signer);
       }
     }
   }, []);
@@ -60,14 +60,17 @@ const Header = () => {
   };
 
   return (
-    <div className='flex justify-end h-14 w-full p-3 text-black bg-gray-400'>
-      <button
-        onClick={connectWallet}
-        className='p-2 flex justify-center items-center bg-blue-400'>
-        {userAddress !== null ? shortUserAddress : "Connect Wallet"}
-      </button>
-      <script src='https://unpkg.com/@themesberg/flowbite@1.1.0/dist/flowbite.bundle.js'></script>
-    </div>
+    <header className="w-full flex justify-center items-center">
+      <div className="flex justify-between h-14 max-w-screen-xl w-full p-3 text-black bg-gray-400">
+        <h1 className="text-2xl font-bold">Logo</h1>
+        <button
+          onClick={connectWallet}
+          className="p-2 flex justify-center items-center bg-blue-400"
+        >
+          {userAddress !== null ? shortUserAddress : "Connect Wallet"}
+        </button>
+      </div>
+    </header>
   );
 };
 export default Header;
